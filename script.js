@@ -1,4 +1,3 @@
-// How many squares to render
 const TOTAL = 800;
 
 // Mount point
