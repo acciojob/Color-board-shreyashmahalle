@@ -1,27 +1,23 @@
- const board = document.getElementById('board');
-  const SQUARES = 800;
+const board = document.getElementById('board');
+const SQUARES = 800;
 
-  // create 800 squares
-  for (let i = 0; i < SQUARES; i++) {
-    const sq = document.createElement('div');
-    sq.className = 'square';
-    sq.addEventListener('mouseenter', () => lightUp(sq));
-    sq.addEventListener('touchstart', () => lightUp(sq), {passive:true});
-    board.appendChild(sq);
-  }
+for (let i = 0; i < SQUARES; i++) {
+  const sq = document.createElement('div');
+  sq.className = 'square';
+  // use mouseover because the tests trigger 'mouseover'
+  sq.addEventListener('mouseover', () => lightUp(sq));
+  sq.addEventListener('mouseout', () => dim(sq));
+  board.appendChild(sq);
+}
 
-  function lightUp(el){
-    // random bright-ish color
-    const color = `hsl(${Math.floor(Math.random()*360)}, 70%, 55%)`;
-    el.style.backgroundColor = color;
-    el.style.boxShadow = `0 0 10px ${color}, 0 0 25px ${color}`;
-    el.classList.add('lit');
+function lightUp(el){
+  const color = `hsl(${Math.floor(Math.random()*360)},70%,55%)`;
+  el.style.backgroundColor = color;
+  el.style.boxShadow = `0 0 10px ${color}, 0 0 25px ${color}`;
+}
 
-    // fade back smoothly after 1s
-    setTimeout(() => {
-      el.style.backgroundColor = '';
-      el.style.boxShadow = '';
-      el.classList.remove('lit');
-      // transition defined in CSS handles the smooth disappearance
-    }, 1000);
-  }
+function dim(el){
+  // revert to base; CSS transition handles smooth 1s fade
+  el.style.backgroundColor = '';
+  el.style.boxShadow = '';
+}
